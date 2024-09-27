@@ -1,0 +1,40 @@
+import pandas as pd
+
+# Import data
+def import_data(file_path):
+    try:
+        data = pd.read_excel(file_path)  # Ensure the file is an Excel file
+        return data
+    except FileNotFoundError:
+        print("File not found. Please check the file path.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+# Export data
+def export_data(data, file_path):
+    try:
+        data.to_excel(file_path, index=False)  # Ensure the file path is correct
+    except Exception as e:
+        print(f"Error: {e}")
+
+# Show dataset details
+def dataset_details(data):
+    if data is not None:
+        print("Number of rows:", data.shape[0])
+        print("Number of columns:", data.shape[1])
+        print("First five rows:\n", data.head())
+        print("Size of the dataset:", data.size)
+        print("Number of missing values:\n", data.isnull().sum())
+        print("Sum of numerical columns:\n", data.sum(numeric_only=True))
+        print("Average of numerical columns:\n", data.mean(numeric_only=True))
+        print("Minimum values of numerical columns:\n", data.min(numeric_only=True))
+        print("Maximum values of numerical columns:\n", data.max(numeric_only=True))
+    else:
+        print("Data is None. Please check the import step.")
+
+# Example usage
+file_path = 'example_data.xlsx'  # Ensure this file exists
+data = import_data(file_path)
+dataset_details(data)
+export_path = 'exported_data.xlsx'  # Desired export file path
+export_data(data, export_path)
